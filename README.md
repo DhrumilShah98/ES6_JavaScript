@@ -22,6 +22,7 @@
 11. [Rest and Spread operators](#11-rest-and-spread-operators)
 12. [Destructuring](#12-destructuring)
 13. [Promises and Fetch](#13-promises-and-fetch)
+14. [Enhanced Object Literals](#14-enhanced-object-literals)
 
 ## 1. The 'forEach' helper method
 - The **forEach** array helper method calls a function once on each item in an array. In ES5 or below, if we want to iterate over an array, we would make use of a for loop.
@@ -658,6 +659,52 @@ fetch(url)
     .then(response => response.json())
     .then(data => console.log(data[0].id))
     .catch(err => console.log('BAD', err);
+```
+
+[Back To Top](#javascript-es6)
+
+## 14. Enhanced Object Literals
+- For better readability
+
+```js
+const inventory = [
+  {title: 'Harry Potter', price: 10},
+  {title: 'Eloquent JavaScript', price: 15},
+];
+
+function createBookShop(inventory) {
+  return {
+    inventory: inventory,
+    inventoryValue: function() {
+      return this.inventory.reduce((total, book) => total + book.price, 0);
+    },
+    priceForTitle: function(title) {
+      return this.inventory.find(book => book.title === title).price;
+    }
+  };
+}
+
+function createEnhancedBookShop(inventory) {
+  return {
+    inventory,
+    inventoryValue() {
+      return this.inventory.reduce((total, book) => total + book.price, 0);
+    },
+    priceForTitle(title) {
+      return this.inventory.find(book => book.title === title).price;
+    }
+  };
+}
+
+// const bookShop = createBookShop(inventory);
+const bookShop = createEnhancedBookShop(inventory);
+console.log(bookShop.inventoryValue());
+console.log(bookShop.priceForTitle('Harry Potter'));
+```
+```
+Output:
+25
+10
 ```
 
 [Back To Top](#javascript-es6)
