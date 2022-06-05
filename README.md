@@ -23,6 +23,7 @@
 12. [Destructuring](#12-destructuring)
 13. [Promises and Fetch](#13-promises-and-fetch)
 14. [Enhanced Object Literals](#14-enhanced-object-literals)
+15. [Classes](#15-classes)
 
 ## 1. The 'forEach' helper method
 - The **forEach** array helper method calls a function once on each item in an array. In ES5 or below, if we want to iterate over an array, we would make use of a for loop.
@@ -707,4 +708,69 @@ Output:
 10
 ```
 
+[Back To Top](#javascript-es6)
+
+## 15. Classes
+- Prototypal Inheritance (DIFFICULT!!!!)
+```js
+function Car(options){
+    this.title = options.title;
+}
+
+Car.prototype.drive = function(){
+    return 'Vroom!!!';
+}
+
+function Toyota(options) {
+    Car.call(this, options);
+    this.color = options.color;
+}
+
+Toyota.prototye = Object.create(Car.prototype);
+Toyota.prototype.constructor = Toyota;
+
+Toyota.prototype.honk = function(){
+    return 'beep';
+}
+
+const toyota = new Toyota({title: 'Daily Driver', color: 'red'});
+console.log(toyota);
+```
+```
+Output:
+Toyota { title: 'Daily Driver', color: 'red' }
+```
+
+- Class (EASY!!!!)
+```js
+class Car {
+    constructor({ title }){
+        this.title = title;
+    }
+    drive(){
+        return 'Vroom!!!';
+    }
+}
+
+class Toyota extends Car {
+    constructor(options){
+        super(options);
+        this.color = options.color;
+    }
+    honk() {
+        return 'beep';
+    }
+}
+
+const car = new Toyota({ title: 'Daily Driver', color: 'red' });
+console.log(car);
+console.log(car.drive());
+console.log(car.honk());
+```
+```
+Output:
+Toyota { title: 'Daily Driver', color: 'red' }
+Vroom!!!
+beep
+```
 [Back To Top](#javascript-es6)
