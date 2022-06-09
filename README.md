@@ -24,6 +24,7 @@
 13. [Promises and Fetch](#13-promises-and-fetch)
 14. [Enhanced Object Literals](#14-enhanced-object-literals)
 15. [Classes](#15-classes)
+16. [Generators](#16-generators)
 
 ### Practice
 1. [JavaScript Array Function Practice](https://github.com/DhrumilShah98/javascript-array-functions-practice)
@@ -785,4 +786,215 @@ Toyota { title: 'Daily Driver', color: 'red' }
 Vroom!!!
 beep
 ```
+[Back To Top](#javascript-es6)
+
+
+## 16. Generators
+### 16.1 The for-of loop
+```js
+const numbers = [1, 2, 3, 4, 5, 6];
+let total = 0;
+for(let num of numbers){
+  total += num;
+}
+console.log(total);
+```
+```
+Output:
+21
+```
+
+### 16.2 What is a generator?
+- A generator is a function that can be entered and exited multiple times. Normally, when we call a function, the function will run and return some value. With generators, we run some code, return a value, and then go right back into the function at the same place where we left it.
+- Syntax of Generator function
+  ```js
+  function* function_name() {
+  }
+
+  function *function_name() {
+  }
+  ```
+  ```js
+  function* numbers(){
+    yield;
+  }
+  const genNumbers = numbers();
+  console.log(genNumbers.next());
+  console.log(genNumbers.next());
+  ```
+  ```
+  Output:
+  { value: undefined, done: false }
+  { value: undefined, done: true }
+  ```
+
+### 16.3 What does a generator do?
+- Story time
+  ```js
+  function* shopping(){
+    // -- stuff on sidewalk --
+      
+    // walking down the sidewalk
+      
+    // go into store with cash
+    const stuffFromStore = yield 'cash';
+    
+    // walking back home
+    const stuffFromLaundry = yield 'laundry';
+
+    return [stuffFromStore, stuffFromLaundry];
+  }
+
+  // -- stuff in the store --
+  const gen = shopping();
+  console.log(gen.next()); //leaving our house
+  // walked into a store
+  // walking up and down the aisles...
+  // purchase out stuff
+  console.log(gen.next('groceries')); // leaving the store with groceries
+  console.log(gen.next('clothes')); // leaving the laundry with clean clothes
+  ```
+  ```
+  Output:
+  { value: 'cash', done: false }
+  { value: 'groceries', done: true }
+  { value: [ 'groceries', 'clothes' ], done: true }
+  ```
+
+### 16.4 Generators with for-of loop?
+- Generators with for-of loop.
+  ```js
+  function* colors() {
+      yield 'red';
+      yield 'green';
+      yield 'blue';
+  }
+
+  const allColors = [];
+  for(let color of colors()){
+      allColors.push(color);
+  }
+  console.log(allColors);
+  ```
+  ```
+  Output:
+  [ 'red', 'green', 'blue' ]
+  ```
+
+### 16.5 Iteration with generators
+- Generator to iterate objects.
+  ```js
+  const engineeringTeam = {
+    manager: 'Dark Rai',
+    lead: 'John Snow',
+    seniorDeveloper: 'Alex Chow',
+    developer: 'Dave Bros'
+  };
+
+  function* engineeringTeamIterator(team) {
+      yield team.manager;
+      yield team.lead;
+      yield team.seniorDeveloper;
+      yield team.developer;
+  }
+
+  for(let member of engineeringTeamIterator(engineeringTeam)){
+      console.log(member);
+  }
+  ```
+  ```
+  Output:
+  Dark Rai
+  John Snow
+  Alex Chow
+  Dave Bros
+  ```
+
+### 16.6 Generator delegation
+- Generators to iterate multiple objects.
+  ```js
+  const testingTeam = {
+    lead: 'Amanda Gills',
+    tester: 'Bill Murray'
+  };
+
+  const engineeringTeam = {
+    manager: 'Dark Rai',
+    lead: 'John Snow',
+    seniorDeveloper: 'Alex Chow',
+    developer: 'Dave Bros',
+    testingTeam
+  };
+
+  function* testingTeamIterator(team) {
+    yield team.lead;
+    yield team.tester;
+  }
+
+  function* engineeringTeamIterator(team) {
+    yield team.manager;
+    yield team.lead;
+    yield team.seniorDeveloper;
+    yield team.developer;
+    yield* testingTeamIterator(team.testingTeam);
+    // OR
+    // const testingTeamGenerator = testingTeamIterator(team.testingTeam);
+    // yield* testingTeamGenerator;
+  }
+
+  for(let member of engineeringTeamIterator(engineeringTeam)){
+    console.log(member);
+  }
+  ```
+  ```
+  Output:
+  Dark Rai
+  John Snow
+  Alex Chow
+  Dave Bros
+  Amanda Gills
+  Bill Murray
+  ```
+
+### 16.7 Generators with Symbol.iterator
+- Symbol.iterator is a tool that teaches us how to respond to a for-of loop. Symbol.iterator
+  ```js
+  const testingTeam = {
+    lead: 'Amanda Gills',
+    tester: 'Bill Murray',
+    [Symbol.iterator]: function* () {
+      yield this.lead,
+      yield this.tester
+    }
+  };
+
+  const engineeringTeam = {
+    manager: 'Dark Rai',
+    lead: 'John Snow',
+    seniorDeveloper: 'Alex Chow',
+    developer: 'Dave Bros',
+    testingTeam,
+    [Symbol.iterator]: function* () {
+      yield this.manager;
+      yield this.lead;
+      yield this.seniorDeveloper;
+      yield this.developer;
+      yield* this.testingTeam;
+    }
+  };
+
+  for(let member of engineeringTeam){
+    console.log(member);
+  }
+  ```
+  ```
+  Output:
+  Dark Rai
+  John Snow
+  Alex Chow
+  Dave Bros
+  Amanda Gills
+  Bill Murray
+  ```
+
 [Back To Top](#javascript-es6)
