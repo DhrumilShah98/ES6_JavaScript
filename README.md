@@ -467,6 +467,8 @@ Output:
 3
 16
 [ 2, 4, 6, 8, 10 ]
+[ 'Jane is on team Super Squad', 'Bill is on team Super Squad' ]
+[ 'Jane is on team Super Squad', 'Bill is on team Super Squad' ]
 ```
 
 [Back To Top](#javascript-es6)
