@@ -50,6 +50,12 @@ Output:
 red
 green
 blue
+red
+green
+blue
+red
+green
+blue
 ```
 
 ```js
