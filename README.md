@@ -8,6 +8,11 @@
 ### Babel
 - Babel is a free and open-source JavaScript transcompiler that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript that can be run by older JavaScript engines. Babel is a popular tool for using the newest features of the JavaScript programming language.
 
+### Course - [ES6 Javascript: The Complete Developer's Guide](https://www.udemy.com/course/javascript-es6-tutorial/)
+<div align="center">
+	<img src="./ES6 Javascript - The Complete Developers Guide Certificate.jpg" width="70%" />
+</div>
+
 ### Topics
 1. [The 'forEach' helper method](#1-the-foreach-helper-method)
 2. [The 'map' helper method](#2-the-map-helper-method)
