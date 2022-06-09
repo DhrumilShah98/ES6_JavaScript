@@ -25,6 +25,9 @@
 14. [Enhanced Object Literals](#14-enhanced-object-literals)
 15. [Classes](#15-classes)
 
+### Practice
+1. [JavaScript Array Function Practice](https://github.com/DhrumilShah98/javascript-array-functions-practice)
+
 ## 1. The 'forEach' helper method
 - The **forEach** array helper method calls a function once on each item in an array. In ES5 or below, if we want to iterate over an array, we would make use of a for loop.
 
